@@ -4,9 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>together</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
 /* 레이아웃: 메모·꾸미기 패널 | 뷰파인더 무대 | 채팅. 폰에서는 무대 + 탭 하나씩. 녹화 화면처럼 각진 모서리, 레드는 '켜져 있음'에만 */
 :root{
@@ -458,6 +457,278 @@ body.is-host .members .host-only{display:inline-flex!important}
 }
 @media (max-width:420px){.brand-sm span,.tc{display:none}.reacts button:nth-child(n+5){display:none}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition:none!important}}
+
+/* ═════ 플랫 테마: 그래파이트 레이어 + 레드 라이브 표시 하나. 테두리 대신 면의 밝기로 구분 ═════ */
+:root{
+  --bg:#f3f4f6; --surface:#ffffff; --surface-2:#eceef1; --surface-3:#e2e5e9; --line:#e2e5e9; --ink:#0d0e10; --muted:#5f646d;
+  --accent:#e01e2f; --accent-ink:#ffffff; --accent-soft:rgba(224,30,47,.1); --stage:#0d0e10; --rec:#f23847;
+  --mine:#e01e2f; --mine-ink:#ffffff;
+  --n0:#e01e2f; --n1:#0d0e10; --n2:#9aa0aa; --n3:#ff8a93; --n4:#8b1520;
+  --f-display:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --f-body:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --f-mono:'Pretendard Variable',Pretendard,-apple-system,system-ui,sans-serif;
+  --r:10px; --shadow:0 8px 24px rgba(13,14,16,.08);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121316; --surface:#1b1c20; --surface-2:#24262b; --surface-3:#2e3036; --line:#2a2c31; --ink:#f3f4f6; --muted:#9aa0aa;
+  --accent:#f23847; --accent-ink:#ffffff; --accent-soft:rgba(242,56,71,.16); --stage:#08090a; --rec:#f23847;
+  --mine:#f23847; --mine-ink:#ffffff;
+  --n0:#f23847; --n1:#f3f4f6; --n2:#6f747d; --n3:#ff8a93; --n4:#a81c29;
+  --shadow:0 12px 32px rgba(0,0,0,.45); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121316; --surface:#1b1c20; --surface-2:#24262b; --surface-3:#2e3036; --line:#2a2c31; --ink:#f3f4f6; --muted:#9aa0aa;
+  --accent:#f23847; --accent-ink:#ffffff; --accent-soft:rgba(242,56,71,.16); --stage:#08090a; --rec:#f23847;
+  --mine:#f23847; --mine-ink:#ffffff;
+  --n0:#f23847; --n1:#f3f4f6; --n2:#6f747d; --n3:#ff8a93; --n4:#a81c29;
+  --shadow:0 12px 32px rgba(0,0,0,.45); color-scheme:dark}
+body{font:500 14.5px/1.55 var(--f-body);letter-spacing:-.005em}
+::-webkit-scrollbar{width:10px;height:10px} ::-webkit-scrollbar-thumb{background:var(--surface-3);border-radius:10px;border:3px solid transparent;background-clip:padding-box} ::-webkit-scrollbar-track{background:transparent}
+*{scrollbar-color:var(--surface-3) transparent}
+
+/* 기본 컨트롤 */
+.btn,.tbtn,.ibtn{border:0;background:var(--surface-2);border-radius:10px;font-weight:600;transition:background .12s,filter .12s}
+.btn:hover,.tbtn:hover,.ibtn:hover{background:var(--surface-3)}
+.btn.primary,.tbtn.accent,.ibtn.accent{background:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover,.tbtn.accent:hover,.ibtn.accent:hover{background:var(--accent);filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--muted)} .btn.ghost:hover{background:var(--surface-2);color:var(--ink)}
+.btn.sm{border-radius:8px;padding:7px 12px}
+.tbtn[aria-pressed="true"],.ibtn[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);border:0}
+.tbtn.accent[aria-pressed="true"],.ibtn.accent[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.field,.sel,.composer textarea,.sel-bar select,input[type=date].sel{border:0;background:var(--surface-2);border-radius:10px}
+.field:focus,.sel:focus,.composer textarea:focus{outline:none;box-shadow:0 0 0 2px var(--accent)}
+input[type=color]{border:0;background:var(--surface-2);border-radius:8px}
+.chip{border:0;background:var(--surface-2);border-radius:999px;padding:6px 12px;font-weight:600;color:var(--muted)}
+.chip:hover{color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.tag{border:0;background:var(--surface-3);border-radius:6px;font-weight:600}
+.tag.live{background:var(--accent-soft);color:var(--accent)}
+.badge{border-radius:999px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* 로비 */
+.lobby{background:var(--bg)}
+.lobby-card{border:0;border-radius:18px;box-shadow:var(--shadow);padding:30px 26px;gap:16px}
+.brand h1{font:800 36px/1 var(--f-display);letter-spacing:-.04em}
+.rec-word{gap:0} .rec-line{display:none}
+.lobby label{font-weight:700;color:var(--muted);font-size:12.5px}
+.lobby-acct{border:0;background:var(--surface-2);border-radius:14px}
+.invite{border-radius:14px}
+.divider::before,.divider::after{background:var(--surface-3)}
+
+/* 상단바 */
+.topbar{border-bottom:0;background:var(--bg);padding-top:calc(12px + env(safe-area-inset-top,0px));padding-bottom:4px}
+.brand-sm{font:800 20px/1 var(--f-display);letter-spacing:-.04em}
+.tc{border:0;background:var(--surface-2);border-radius:8px;font:600 12px/1 var(--f-body);color:var(--muted);font-variant-numeric:tabular-nums;padding:7px 10px}
+.code-chip{border:0;background:var(--surface-2);border-radius:8px;padding:7px 10px;font-weight:600}
+.code-chip .mono{color:var(--ink);font-family:var(--f-body);font-weight:700;letter-spacing:.02em}
+.couple-chip{border:0;background:var(--accent-soft);color:var(--accent);border-radius:999px;font:700 12.5px/1 var(--f-body);padding:7px 11px}
+.pending-chip{border-radius:999px}
+
+/* 패널 */
+.main{gap:10px;padding:8px 12px 12px}
+.panel{border:0;border-radius:14px;background:var(--surface)}
+.ptabs{border-bottom:0;background:transparent;padding:10px 10px 0;gap:4px}
+.ptabs button{border-radius:8px;font-weight:600;padding:8px 6px}
+.ptabs button:hover{background:var(--surface-2);color:var(--ink)}
+.ptabs button[aria-selected="true"]{background:var(--surface-2);color:var(--ink);box-shadow:none}
+.view{padding:14px 14px 18px;gap:14px}
+.view-head h2,.chat-head h2{font:700 17px/1.2 var(--f-body);letter-spacing:-.02em}
+.view-hint{font-size:12.5px}
+fieldset{border:0;background:var(--surface-2);border-radius:12px;padding:12px 14px 14px;gap:10px}
+legend{float:left;width:100%;padding:0;margin:0 0 2px;font:700 13px/1.3 var(--f-body);color:var(--ink);letter-spacing:-.01em}
+fieldset .field,fieldset .sel,fieldset input[type=color],fieldset .chip{background:var(--surface-3)}
+fieldset .chip[aria-pressed="true"]{background:var(--ink)}
+fieldset .btn:not(.primary){background:var(--surface-3)}
+fieldset .btn.ghost{background:transparent}
+.empty{border:0;background:var(--surface-2);border-radius:12px}
+
+/* 메모 */
+.note{border:0;background:var(--surface-2);border-radius:12px;box-shadow:inset 3px 0 0 var(--nc);padding:10px 10px 8px 6px}
+.note.pinned{box-shadow:inset 3px 0 0 var(--nc)}
+.note-title{font-weight:700}
+.note-foot button{border-radius:6px;font-weight:600}
+.note-foot button:hover{background:var(--surface-3)}
+.note-title:focus,.note-body:focus{background:var(--surface-3)}
+.note.selected{outline:2px solid var(--accent)}
+.sel-bar{border:0;background:var(--surface-3);border-radius:12px}
+.note-frame{border:0;border-radius:8px}
+.drag-ghost{background:var(--surface-3);border-radius:10px}
+
+/* 꾸미기 */
+.st-list button{border:0;background:var(--surface-3);border-radius:10px}
+.st-list button[aria-pressed="true"]{box-shadow:0 0 0 2px var(--accent)}
+
+/* 사람 */
+.members li{border-radius:10px;padding:8px}
+.pend{border-radius:12px}
+.couple-card{border:0;background:var(--accent-soft);border-radius:12px}
+.couple-card small{font:600 12px/1.4 var(--f-body)}
+
+/* 무대 */
+.stage{border-radius:14px}
+.vf{inset:14px} .vf i{border-color:rgba(255,255,255,.28);width:16px;height:16px}
+.vf b{font:600 11.5px/1 var(--f-body);letter-spacing:0;color:rgba(255,255,255,.55);font-variant-numeric:tabular-nums}
+.screen-empty{background:#0b0c0e}
+.screen-empty .t{font:600 clamp(14px,2.3cqw,18px)/1.4 var(--f-body)}
+.standby{font:600 12px/1 var(--f-body);letter-spacing:0;color:#8a9099}
+.standby i{border:0;background:#4a4e55}
+.sharer-tag{font:600 12px/1.4 var(--f-body);letter-spacing:0;border-radius:999px;padding:5px 11px}
+.stage-bar{gap:8px}
+.reacts{border:0;background:var(--surface);border-radius:12px;padding:4px}
+.reacts button{border-radius:8px}
+.reacts button:hover{background:var(--surface-2)}
+.av-ctrl .ibtn,.bar-tools .ibtn{background:var(--surface)}
+.av-ctrl .ibtn:hover,.bar-tools .ibtn:hover{background:var(--surface-2)}
+.av-ctrl .ibtn.accent{background:var(--accent)}
+.av-ctrl .ibtn[aria-pressed="true"]:not(.accent),.bar-tools .ibtn[aria-pressed="true"]{background:var(--accent-soft)}
+.ibtn{border-radius:10px;padding:8px 12px}
+.screen-tabs{gap:8px}
+.stab{border:0;background:var(--surface);border-radius:12px;padding:5px 12px 5px 5px;font-weight:600}
+.stab video{border-radius:8px}
+.stab[aria-pressed="true"]{box-shadow:0 0 0 2px var(--accent)}
+.ss{border:0;background:var(--surface);border-radius:999px;padding:6px 12px;font-weight:600}
+.ss b{font:700 12.5px/1 var(--f-body);font-variant-numeric:tabular-nums}
+.pop{border:0;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.io-row{border:0;background:var(--surface-2);border-radius:12px}
+.io-row .sel{background:var(--surface-3)}
+.meter{background:var(--surface-3)}
+.pad{border:0;background:var(--surface-2);border-radius:12px;font-weight:700}
+.pad:hover{background:var(--surface-3)}
+.pad.mine{border:0;box-shadow:inset 0 0 0 1.5px var(--surface-3)}
+.pad.hit{background:var(--accent);color:var(--accent-ink)}
+.pad kbd{font:600 10.5px/1 var(--f-body)}
+.sfx-tag{border-radius:999px;font-weight:600}
+.edit-badge{border-radius:999px}
+
+/* 타이머 */
+.tm-main{border:0;background:var(--surface-2);border-radius:14px}
+.tm-state{font:700 12.5px/1 var(--f-body);letter-spacing:0}
+.tm-big{font:800 clamp(38px,4.4vw,48px)/1 var(--f-body);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.tm-sub{font:600 12.5px/1.3 var(--f-body)}
+.tm-bar,.bar-row .track{background:var(--surface-3);border-radius:999px}
+.tm-bar i,.bar-row .track i{border-radius:999px}
+.sp .rk,.sp .tt,.bar-row b,.wk-col small,.pad kbd{font-family:var(--f-body);font-variant-numeric:tabular-nums}
+.sp .tt{font-weight:700}
+.tag-edit span{border:0;background:var(--surface-3);border-radius:999px}
+.aw-guide code,.codebox pre{border:0;background:var(--surface-3);border-radius:6px;font-family:ui-monospace,Menlo,Consolas,monospace}
+
+/* 채팅 */
+.chat-head{border-bottom:0;box-shadow:0 1px 0 var(--line)}
+.bubble{border:0;background:var(--surface-2);border-radius:16px 16px 16px 6px;padding:8px 12px}
+.msg.mine .bubble{border-radius:16px 16px 6px 16px}
+.msg.cont .bubble{border-top-left-radius:6px}
+.msg.mine.cont .bubble{border-top-left-radius:16px;border-top-right-radius:6px}
+.msg-meta .who{font-weight:700}
+.msg-img{border:0;border-radius:14px}
+.nq{border:0!important;background:var(--surface-2);border-radius:14px;box-shadow:inset 3px 0 0 var(--accent)}
+.nq small{font-weight:700;letter-spacing:0}
+.msg-acts button{border:0;background:var(--surface-2);font-weight:600}
+.sys{background:transparent;color:var(--muted);font-weight:600;padding:2px 0}
+.composer{border-top:0;padding:10px 12px 12px}
+.composer textarea{padding:10px 14px;border-radius:12px}
+.cbtn{border-radius:10px}
+.cbtn.send{border-radius:10px}
+.pin-bar{border:0;background:var(--surface-2);border-radius:12px;box-shadow:inset 3px 0 0 var(--accent)}
+.drop-hint{border-radius:14px}
+
+/* 폰 탭 */
+.mtabs{border-top:0;background:var(--surface);box-shadow:0 -1px 0 var(--line)}
+.mtabs button{font-weight:600;border-radius:10px}
+.mtabs button[aria-selected="true"]{background:var(--surface-2);color:var(--ink);box-shadow:none}
+
+/* 토스트·오버레이 */
+.toast{background:var(--surface-3);color:var(--ink);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.3);font-weight:500}
+.toast .acts button{background:var(--surface-2);color:var(--ink);border-radius:8px}
+.toast .acts button.yes{background:var(--accent);color:var(--accent-ink)}
+.toast input[type=text]{background:var(--surface-2)}
+.overlay{background:color-mix(in srgb,var(--bg) 80%,transparent)}
+.ov-card{border:0;border-radius:18px;box-shadow:var(--shadow)}
+.ov-card h2{font:700 19px/1.3 var(--f-body)}
+.spin{border-color:var(--surface-3);border-top-color:var(--accent)}
+
+@media (max-width:979px){
+  .main{padding:6px 8px 0;gap:8px}
+  .panel{border-radius:16px 16px 0 0}
+  .stage{border-radius:12px}
+  .topbar{padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:2px}
+}
+
+/* ═════ 설정 창 · 개인 채팅 ═════ */
+.settings{position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.6);display:grid;place-items:center;padding:24px}
+.set-card{width:min(860px,100%);height:min(640px,100%);background:var(--surface);display:grid;grid-template-columns:200px 1fr;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.set-nav{background:var(--bg);display:flex;flex-direction:column;gap:2px;padding:20px 10px}
+.set-brand{font:800 13px/1 var(--f-body);color:var(--muted);padding:4px 10px 12px}
+.set-nav button{border:0;background:transparent;text-align:left;padding:9px 10px;font-weight:600;color:var(--muted)}
+.set-nav button:hover{background:var(--surface-2);color:var(--ink)}
+.set-nav button[aria-selected="true"]{background:var(--surface-2);color:var(--ink);box-shadow:inset 2px 0 0 var(--accent)}
+.set-body{display:flex;flex-direction:column;min-width:0;min-height:0}
+.set-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px 6px}
+.set-head h2{margin:0;font:800 20px/1.2 var(--f-body);letter-spacing:-.02em}
+.set-sec{flex:1;overflow:auto;padding:12px 22px 24px;display:flex;flex-direction:column;gap:12px}
+.set-sec>*{flex-shrink:0}
+.set-sec[hidden]{display:none}
+.set-sec[data-sec="account"] legend,.set-sec[data-sec="couple"] legend{display:none}
+.chan-bar{display:flex;gap:6px;overflow-x:auto;padding:8px 10px 0;scrollbar-width:none}
+.chan-bar::-webkit-scrollbar{display:none}
+.chan{flex:none;display:inline-flex;align-items:center;gap:6px;border:0;background:var(--surface-2);color:var(--muted);padding:6px 10px;font-size:12.5px;font-weight:700;max-width:160px}
+.chan span:not(.badge){overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chan:hover{color:var(--ink)}
+.chan[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.chan.away{opacity:.55}
+.chan.add{background:transparent;border:1px dashed var(--surface-3)}
+.chat{position:relative}
+.dm-pick{position:absolute;left:10px;right:10px;top:96px;z-index:20;background:var(--surface-3);box-shadow:0 16px 40px rgba(0,0,0,.4);padding:6px;display:flex;flex-direction:column;gap:2px}
+.dm-pick button{display:flex;align-items:center;gap:8px;border:0;background:transparent;padding:8px;font-weight:600;text-align:left}
+.dm-pick button:hover{background:var(--surface-2)}
+.composer textarea:disabled{opacity:.6}
+
+/* ═════ 각지게 + 완전 블랙 ═════ */
+:root{--bg:#f2f2f2; --surface:#ffffff; --surface-2:#ebebeb; --surface-3:#dedede; --line:#e0e0e0; --ink:#000000; --muted:#5e5e5e; --stage:#000000; --n1:#000000; --r:4px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000000; --surface:#0b0b0b; --surface-2:#161616; --surface-3:#222222; --line:#1c1c1c; --ink:#ffffff; --muted:#929292; --stage:#000000; --n1:#ffffff}}
+:root[data-theme="dark"]{--bg:#000000; --surface:#0b0b0b; --surface-2:#161616; --surface-3:#222222; --line:#1c1c1c; --ink:#ffffff; --muted:#929292; --stage:#000000; --n1:#ffffff}
+.btn,.tbtn,.ibtn,.btn.sm,.field,.sel,.composer textarea,.sel-bar select,input[type=color],.chip,.tag,.code-chip,.tc,.couple-chip,.pending-chip,
+.ptabs button,.mtabs button,.reacts,.reacts button,.stab,.stab video,.ss,.pad,.io-row,.tm-main,.tm-bar,.bar-row .track,.tm-bar i,.bar-row .track i,
+.note,.note-foot button,.sel-bar,.note-frame,.drag-ghost,.st-list button,.members li,.pend,.couple-card,.empty,fieldset,.lobby-acct,.invite,
+.toast,.toast .acts button,.pin-bar,.msg-acts button,.cbtn,.chan,.sfx-tag,.edit-badge,.sharer-tag,.tag-edit span,.aw-guide code,.codebox pre,
+.set-nav button,.dm-pick,.dm-pick button,.drop-hint,.badge,.msg-img,.nq,.pop,.ov-card,.lobby-card,.set-card,.av,.wk-bars i{border-radius:4px}
+.panel{border-radius:6px} .stage{border-radius:6px} .frame{border-radius:2px}
+.bubble,.msg.mine .bubble,.msg.cont .bubble,.msg.mine.cont .bubble{border-radius:4px}
+.f-round .frame{border-radius:12px}
+.screen-box{border-radius:2px}
+.av{border-radius:4px}
+.av.lg{border-radius:6px}
+.live-dot,.tm-state i,.standby i,.sharer-tag i,.tc i,.rec-mark .dot,.ping::before,.ping::after{border-radius:50%}
+.screen-empty{background:#000}
+.topbar,.lobby{background:var(--bg)}
+.set-card{border-radius:6px}
+@media (max-width:979px){
+  .panel{border-radius:6px 6px 0 0}
+  .settings{padding:0;place-items:stretch}
+  .set-card{width:100%;height:100%;grid-template-columns:1fr;grid-template-rows:auto 1fr;border-radius:0}
+  .set-nav{flex-direction:row;overflow-x:auto;padding:calc(10px + env(safe-area-inset-top,0px)) 10px 10px;gap:4px;scrollbar-width:none}
+  .set-brand{display:none}
+  .set-nav button{flex:none;white-space:nowrap}
+  .set-nav button[aria-selected="true"]{box-shadow:inset 0 -2px 0 var(--accent)}
+  .set-head{padding:14px 16px 4px}
+  .set-sec{padding:10px 16px calc(24px + env(safe-area-inset-bottom,0px))}
+  .dm-pick{top:52px}
+}
+
+/* 디데이 · 앱 안 브라우저 안내 */
+.dd-chips{display:inline-flex;gap:6px}
+.dd-chip{border:0;background:var(--surface-2);color:var(--ink);border-radius:4px;padding:7px 10px;font:600 12.5px/1 var(--f-body);white-space:nowrap}
+.dd-chip b{color:var(--accent);margin-left:4px;font-variant-numeric:tabular-nums}
+.dd-row{display:grid;grid-template-columns:auto 1fr auto auto auto;align-items:center;gap:8px;padding:6px 0;font-size:13.5px}
+.dd-row+.dd-row{box-shadow:0 -1px 0 var(--surface-3)}
+#ddCouple .dd-row{grid-template-columns:1fr auto auto}
+.dd-tt{font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dd-dt{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.dd-lb{color:var(--accent);font-variant-numeric:tabular-nums;min-width:56px;text-align:right}
+.dd-star,.dd-x{border:0;background:transparent;color:var(--muted);padding:2px 6px;font-size:14px}
+.dd-star[aria-pressed="true"]{color:var(--accent)}
+.inapp{display:flex;flex-direction:column;gap:8px;padding:12px;background:var(--accent-soft);border-radius:4px;font-size:13px}
+.inapp b{color:var(--accent)}
+@media (max-width:979px){ .dd-chips{display:none} }
 </style>
 </head>
 <body>
@@ -482,6 +753,7 @@ body.is-host .members .host-only{display:inline-flex!important}
       <p class="hint">비워 두면 회색 글씨의 랜덤 이름으로 들어가요. 적어 두면 다음에도 이 이름을 써요.</p>
     </div>
 
+    <div class="inapp" id="inappBox" hidden></div>
     <div class="lobby-acct" id="lobbyAcct"></div>
 
     <div id="inviteBox" class="invite" hidden>
@@ -518,6 +790,7 @@ body.is-host .members .host-only{display:inline-flex!important}
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
     </button>
     <div class="spacer"></div>
+    <span class="dd-chips" id="ddChips"></span>
     <button id="coupleChip" class="couple-chip" type="button" hidden></button>
     <button id="pendingChip" class="pending-chip" type="button" hidden></button>
     <button id="micBtn" class="tbtn js-mic m-only" type="button" aria-pressed="false" title="마이크">
@@ -526,7 +799,7 @@ body.is-host .members .host-only{display:inline-flex!important}
     <button id="shareBtn" class="tbtn accent js-share m-only" type="button" aria-pressed="false">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M12 13V7M9 10l3-3 3 3"/></svg><span class="lbl">화면 공유</span>
     </button>
-    <button id="themeBtn" class="tbtn" type="button" title="화면 밝기" aria-label="화면 밝기"></button>
+    <button id="setBtn" class="tbtn" type="button" title="설정" aria-label="설정"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span class="lbl">설정</span></button>
     <button id="leaveBtn" class="tbtn" type="button"><span id="leaveLbl">나가기</span></button>
   </header>
 
@@ -557,7 +830,7 @@ body.is-host .members .host-only{display:inline-flex!important}
       <section class="view" data-view="timer">
         <div class="view-head"><h2>타이머</h2><span class="tag" id="dayLbl"></span></div>
         <div class="tm-main">
-          <div class="tm-state" id="tmState"><i></i><span>STANDBY</span></div>
+          <div class="tm-state" id="tmState"><i></i><span>대기 중</span></div>
           <div class="tm-big" id="tmToday" aria-label="오늘 누적 시간">00:00:00</div>
           <div class="tm-sub"><span id="tmSession">이번 회차 00:00:00</span><span id="tmGoalTxt"></span></div>
           <div class="tm-bar"><i id="tmGoalBar"></i></div>
@@ -572,34 +845,11 @@ body.is-host .members .host-only{display:inline-flex!important}
         <fieldset><legend>오늘 내가 많이 한 것</legend><div class="bars" id="tagRank"></div></fieldset>
         <fieldset id="awBox">
           <legend>PC에서 오래 쓴 프로그램</legend>
-          <label class="check"><input type="checkbox" id="awOn"> 이 PC의 ActivityWatch 기록 가져오기</label>
-          <p class="view-hint" id="awStatus">PC에 ActivityWatch를 설치하면 실제로 쓴 프로그램 시간이 자동으로 기록돼요. 처음 한 번은 아래 설정이 필요해요.</p>
           <div class="chips" id="awModes"><button type="button" class="chip" data-awmode="day">하루 전체</button><button type="button" class="chip" data-awmode="timer">타이머 켠 동안</button></div>
           <div class="bars" id="awApps"></div>
-          <label class="check"><input type="checkbox" id="awShare"> 같이 있는 사람에게 프로그램 이름 보여 주기</label>
-          <details class="aw-guide">
-            <summary>처음 설정하는 법 (PC 한 번만)</summary>
-            <ol>
-              <li><b>activitywatch.net</b>에서 받아 설치하고 실행해요. 작업 표시줄(맥은 메뉴 막대)에 아이콘이 생기면 돼요.</li>
-              <li>설정 폴더를 열어요.<br>윈도우: 탐색기 주소창에 <code>%LOCALAPPDATA%\activitywatch\aw-server-rust</code><br>맥: Finder › 이동 › 폴더로 이동에 <code>~/Library/Application Support/activitywatch/aw-server-rust</code></li>
-              <li>그 폴더의 <code>config.toml</code>을 메모장으로 열고(없으면 새로 만들어요) 맨 위에 이 줄을 넣고 저장해요.
-                <div class="codebox"><pre id="awCfgRust"></pre><button type="button" class="btn sm" data-copy="awCfgRust">복사</button></div>
-                <span class="view-hint">폴더 이름이 <code>aw-server-rust</code>가 아니라 <code>aw-server</code>뿐이라면, 그 폴더의 <code>aw-server.toml</code>에 대신 이걸 넣어요.</span>
-                <div class="codebox"><pre id="awCfgPy"></pre><button type="button" class="btn sm" data-copy="awCfgPy">복사</button></div>
-              </li>
-              <li>아이콘을 눌러 ActivityWatch를 완전히 끈 뒤(Quit) 다시 실행해요.</li>
-              <li>위 체크를 켜요. 크롬·엣지가 ‘로컬 네트워크 접근’을 물으면 허용해요. 사파리에서는 안 되니 PC 크롬이나 엣지를 써 주세요.</li>
-            </ol>
-          </details>
+          <p class="view-hint" id="awOffHint">설정 › 타이머에서 ActivityWatch 연결을 켜면 여기에 프로그램 순위가 떠요.</p>
         </fieldset>
         <fieldset><legend>이번 주</legend><div class="legend" id="weekLegend"></div><div class="week" id="weekChart"></div></fieldset>
-        <fieldset>
-          <legend>타이머 설정</legend>
-          <label class="slider" for="goalIn" style="grid-template-columns:62px 1fr 64px"><span>하루 목표</span><input type="range" id="goalIn" min="30" max="720" step="30"><output id="goalOut"></output></label>
-          <div class="tag-edit" id="tagEdit"></div>
-          <div class="row"><input id="tagNew" class="field" maxlength="12" placeholder="새 태그 (예: 포토샵, 과제)" style="padding:7px 10px"><button id="tagAdd" class="btn sm" type="button">추가</button></div>
-          <button id="studyReset" class="btn sm ghost" type="button" style="align-self:flex-start">내 기록 모두 지우기</button>
-        </fieldset>
         <p class="view-hint">하루는 자정에 바뀌어요. 내 기록은 이 기기에 저장되고, 같이 있는 사람에게는 오늘·이번 주 합계만 보여요.</p>
       </section>
 
@@ -650,25 +900,6 @@ body.is-host .members .host-only{display:inline-flex!important}
         <div class="view-head"><h2>사람</h2><span class="tag" id="peopleCount"></span></div>
         <div class="pending" id="pendingList"></div>
         <ul class="members" id="members"></ul>
-        <fieldset>
-          <legend>내 계정</legend>
-          <div class="acct"><span id="myAv"></span><div class="acct-txt"><b id="acctName"></b><small id="acctMail"></small></div></div>
-          <div class="row" style="flex-wrap:wrap"><button id="avBtn" class="btn sm" type="button">프로필 사진 바꾸기</button><button id="avReset" class="btn sm ghost" type="button">사진 빼기</button></div>
-          <input type="file" id="avInput" accept="image/*" hidden>
-          <div class="row"><input id="myNick" class="field" maxlength="16" style="padding:7px 10px" aria-label="내 이름"><button id="saveNickBtn" class="btn sm" type="button">이름 바꾸기</button></div>
-          <div class="g-area" id="gArea"></div>
-        </fieldset>
-        <fieldset>
-          <legend>커플</legend>
-          <div id="coupleArea" style="display:flex;flex-direction:column;gap:10px"></div>
-        </fieldset>
-        <fieldset>
-          <legend>설정</legend>
-          <label class="check"><input type="checkbox" id="soundChk"> 새 메시지 알림음</label>
-          <label class="check host-only"><input type="checkbox" id="lockChk"> 새로 들어오는 사람 막기 (자동 허락은 그대로)</label>
-          <div class="host-only" style="align-items:center;gap:8px;flex-wrap:wrap"><span style="font-size:13px" id="autoCount"></span><button id="clearAutoBtn" class="btn sm ghost" type="button">자동 허락 모두 해제</button></div>
-        </fieldset>
-        <p class="view-hint" id="roomNote"></p>
       </section>
     </aside>
 
@@ -683,7 +914,7 @@ body.is-host .members .host-only{display:inline-flex!important}
             <div class="screen-box" id="screenBox">
               <video id="screenVid" playsinline autoplay></video>
               <div class="screen-empty" id="screenEmpty">
-                <span class="standby"><i></i>STANDBY</span>
+                <span class="standby"><i></i>대기 중</span>
                 <p class="t" id="emptyTitle">아직 아무도 화면을 공유하지 않았어요</p>
                 <p class="sub" id="emptySub">PC에서 ‘화면 공유’를 누르면 여기에 나와요</p>
               </div>
@@ -716,29 +947,6 @@ body.is-host .members .host-only{display:inline-flex!important}
       </div>
       <div class="study-strip" id="studyStrip" title="눌러서 타이머 열기"></div>
 
-      <div class="pop" id="ioPop" hidden role="dialog" aria-label="소리 설정">
-        <h3>소리가 들어오고 나가는 곳 <button type="button" data-close aria-label="닫기">×</button></h3>
-        <div class="io-row">
-          <span class="io-k">🎙 입력 · 내 목소리</span>
-          <select class="sel" id="inSel" aria-label="마이크 고르기"></select>
-          <div class="meter"><i id="micMeter"></i></div>
-          <p class="io-to" id="inTo"></p>
-        </div>
-        <div class="io-row">
-          <span class="io-k">🔈 출력 · 내가 듣는 곳</span>
-          <select class="sel" id="outSel" aria-label="스피커 고르기"></select>
-          <p class="io-to" id="outTo"></p>
-          <button id="testOut" class="btn sm" type="button" style="align-self:flex-start">테스트 소리 듣기</button>
-        </div>
-        <div class="io-row">
-          <span class="io-k">🖥 공유 화면 소리</span>
-          <p class="io-to" id="scrTo"></p>
-        </div>
-        <label class="slider" for="volVoice" style="grid-template-columns:86px 1fr 40px"><span>상대 목소리</span><input type="range" id="volVoice" min="0" max="100"><output id="volVoiceOut"></output></label>
-        <label class="slider" for="volScreen" style="grid-template-columns:86px 1fr 40px"><span>화면 소리</span><input type="range" id="volScreen" min="0" max="100"><output id="volScreenOut"></output></label>
-        <label class="slider" for="volSfx" style="grid-template-columns:86px 1fr 40px"><span>사운드보드</span><input type="range" id="volSfx" min="0" max="100"><output id="volSfxOut"></output></label>
-        <p class="view-hint">볼륨은 내 기기에서만 바뀌어요.</p>
-      </div>
 
       <div class="pop" id="sbPop" hidden role="dialog" aria-label="사운드보드">
         <h3>사운드보드 <button type="button" data-close aria-label="닫기">×</button></h3>
@@ -750,7 +958,9 @@ body.is-host .members .host-only{display:inline-flex!important}
     </section>
 
     <section id="chatPanel" class="panel chat">
-      <header class="chat-head"><h2>채팅</h2><span class="count" id="chatCount"></span></header>
+      <header class="chat-head"><h2 id="chatTitle">채팅</h2><span class="count" id="chatCount"></span></header>
+      <div class="chan-bar" id="chanBar" aria-label="채팅 고르기"></div>
+      <div class="dm-pick" id="dmPick" hidden></div>
       <button type="button" class="pin-bar" id="pinBar" hidden></button>
       <div class="msgs" id="msgs" aria-live="polite"></div>
       <div class="typing" id="typingLine"></div>
@@ -777,6 +987,139 @@ body.is-host .members .host-only{display:inline-flex!important}
   </nav>
 </div>
 
+
+<div id="settings" class="settings" hidden role="dialog" aria-modal="true" aria-label="설정">
+  <div class="set-card">
+    <nav class="set-nav" id="setNav">
+      <b class="set-brand">설정</b>
+      <button type="button" data-sec="account">내 계정</button>
+      <button type="button" data-sec="couple">커플</button>
+      <button type="button" data-sec="sound">소리</button>
+      <button type="button" data-sec="general">화면·알림</button>
+      <button type="button" data-sec="room">방</button>
+      <button type="button" data-sec="dday">디데이</button>
+      <button type="button" data-sec="timer">타이머</button>
+    </nav>
+    <div class="set-body">
+      <header class="set-head"><h2 id="setTitle">내 계정</h2><button type="button" class="btn sm ghost" id="setClose">닫기</button></header>
+      <section class="set-sec" data-sec="account">
+        <fieldset>
+          <legend>내 계정</legend>
+          <div class="acct"><span id="myAv"></span><div class="acct-txt"><b id="acctName"></b><small id="acctMail"></small></div></div>
+          <div class="row" style="flex-wrap:wrap"><button id="avBtn" class="btn sm" type="button">프로필 사진 바꾸기</button><button id="avReset" class="btn sm ghost" type="button">사진 빼기</button></div>
+          <input type="file" id="avInput" accept="image/*" hidden>
+          <div class="row"><input id="myNick" class="field" maxlength="16" style="padding:7px 10px" aria-label="내 이름"><button id="saveNickBtn" class="btn sm" type="button">이름 바꾸기</button></div>
+          <div class="g-area" id="gArea"></div>
+        </fieldset>
+      </section>
+      <section class="set-sec" data-sec="couple">
+        <fieldset>
+          <legend>커플</legend>
+          <div id="coupleArea" style="display:flex;flex-direction:column;gap:10px"></div>
+        </fieldset>
+      </section>
+      <section class="set-sec" data-sec="sound">
+        <p class="view-hint">내 목소리가 어디로 나가고, 소리가 어디로 들어오는지 보여 줘요. 볼륨은 내 기기에서만 바뀌어요.</p>
+        <div class="io-row">
+          <span class="io-k">🎙 입력 · 내 목소리</span>
+          <select class="sel" id="inSel" aria-label="마이크 고르기"></select>
+          <div class="meter"><i id="micMeter"></i></div>
+          <p class="io-to" id="inTo"></p>
+        </div>
+        <div class="io-row">
+          <span class="io-k">🔈 출력 · 내가 듣는 곳</span>
+          <select class="sel" id="outSel" aria-label="스피커 고르기"></select>
+          <p class="io-to" id="outTo"></p>
+          <button id="testOut" class="btn sm" type="button" style="align-self:flex-start">테스트 소리 듣기</button>
+        </div>
+        <div class="io-row">
+          <span class="io-k">🖥 공유 화면 소리</span>
+          <p class="io-to" id="scrTo"></p>
+        </div>
+        <label class="slider" for="volVoice" style="grid-template-columns:86px 1fr 40px"><span>상대 목소리</span><input type="range" id="volVoice" min="0" max="100"><output id="volVoiceOut"></output></label>
+        <label class="slider" for="volScreen" style="grid-template-columns:86px 1fr 40px"><span>화면 소리</span><input type="range" id="volScreen" min="0" max="100"><output id="volScreenOut"></output></label>
+        <label class="slider" for="volSfx" style="grid-template-columns:86px 1fr 40px"><span>사운드보드</span><input type="range" id="volSfx" min="0" max="100"><output id="volSfxOut"></output></label>
+        <p class="view-hint">볼륨은 내 기기에서만 바뀌어요.</p>
+      
+      </section>
+      <section class="set-sec" data-sec="general">
+        <fieldset>
+          <legend>화면</legend>
+          <div class="chips" id="themeChips"><button type="button" class="chip" data-theme-set="dark">어둡게</button><button type="button" class="chip" data-theme-set="light">밝게</button><button type="button" class="chip" data-theme-set="auto">기기 설정 따라가기</button></div>
+        </fieldset>
+        <fieldset>
+          <legend>알림</legend>
+          <label class="check"><input type="checkbox" id="soundChk"> 새 메시지 알림음</label>
+          <label class="check"><input type="checkbox" id="dmToastChk"> 개인 메시지가 오면 화면에 알려 주기</label>
+          <label class="check"><input type="checkbox" id="sfxKeysChk"> 숫자 키 1~9로 사운드보드 누르기 (PC)</label>
+        </fieldset>
+        <fieldset>
+          <legend>개인정보</legend>
+          <label class="check"><input type="checkbox" id="relayChk"> 내 IP 주소 숨기기 (중계 서버로만 연결)</label>
+          <p class="view-hint" id="relayHint"></p>
+        </fieldset>
+      </section>
+      <section class="set-sec" data-sec="room">
+        <fieldset>
+          <legend>입장</legend>
+          <p class="view-hint guest-only">방 설정은 방장만 바꿀 수 있어요.</p>
+          <label class="check host-only"><input type="checkbox" id="lockChk"> 새로 들어오는 사람 막기 (자동 허락은 그대로)</label>
+          <div class="host-only" style="align-items:center;gap:8px;flex-wrap:wrap"><span style="font-size:13px" id="autoCount"></span><button id="clearAutoBtn" class="btn sm ghost" type="button">자동 허락 모두 해제</button></div>
+        
+        </fieldset>
+        <p class="view-hint" id="roomNote"></p>
+      </section>
+      <section class="set-sec" data-sec="dday">
+        <div id="ddCouple"></div>
+        <fieldset>
+          <legend>내 디데이</legend>
+          <div class="dd-list" id="ddList"></div>
+        </fieldset>
+        <fieldset>
+          <legend>새 디데이</legend>
+          <input class="field" id="ddTitle" maxlength="20" placeholder="이름 (예: 시험, 여행, 생일)">
+          <div class="row" style="flex-wrap:wrap">
+            <input type="date" class="sel" id="ddDate" style="flex:1;min-width:150px">
+            <select class="sel" id="ddMode" style="flex:1;min-width:150px"><option value="until">그날까지 남은 날 (D-)</option><option value="since">그날부터 지난 날 (D+, 첫날 1일)</option></select>
+          </div>
+          <label class="check"><input type="checkbox" id="ddTop" checked> 위쪽에 띄우기</label>
+          <button type="button" class="btn primary sm" id="ddAdd" style="align-self:flex-start">디데이 추가</button>
+        </fieldset>
+        <p class="view-hint">디데이는 이 기기에 저장돼요. 위쪽에는 2개까지 떠요.</p>
+      </section>
+      <section class="set-sec" data-sec="timer">
+        <fieldset>
+          <legend>타이머 설정</legend>
+          <label class="slider" for="goalIn" style="grid-template-columns:62px 1fr 64px"><span>하루 목표</span><input type="range" id="goalIn" min="30" max="720" step="30"><output id="goalOut"></output></label>
+          <div class="tag-edit" id="tagEdit"></div>
+          <div class="row"><input id="tagNew" class="field" maxlength="12" placeholder="새 태그 (예: 포토샵, 과제)" style="padding:7px 10px"><button id="tagAdd" class="btn sm" type="button">추가</button></div>
+          <button id="studyReset" class="btn sm ghost" type="button" style="align-self:flex-start">내 기록 모두 지우기</button>
+        </fieldset>
+        <fieldset>
+          <legend>PC 프로그램 자동 기록</legend>
+          <label class="check"><input type="checkbox" id="awOn"> 이 PC의 ActivityWatch 기록 가져오기</label>
+          <p class="view-hint" id="awStatus">PC에 ActivityWatch를 설치하면 실제로 쓴 프로그램 시간이 자동으로 기록돼요. 처음 한 번은 아래 설정이 필요해요.</p>
+          <label class="check"><input type="checkbox" id="awShare"> 같이 있는 사람에게 프로그램 이름 보여 주기</label>
+          <details class="aw-guide">
+            <summary>처음 설정하는 법 (PC 한 번만)</summary>
+            <ol>
+              <li><b>activitywatch.net</b>에서 받아 설치하고 실행해요. 작업 표시줄(맥은 메뉴 막대)에 아이콘이 생기면 돼요.</li>
+              <li>설정 폴더를 열어요.<br>윈도우: 탐색기 주소창에 <code>%LOCALAPPDATA%\activitywatch\aw-server-rust</code><br>맥: Finder › 이동 › 폴더로 이동에 <code>~/Library/Application Support/activitywatch/aw-server-rust</code></li>
+              <li>그 폴더의 <code>config.toml</code>을 메모장으로 열고(없으면 새로 만들어요) 맨 위에 이 줄을 넣고 저장해요.
+                <div class="codebox"><pre id="awCfgRust"></pre><button type="button" class="btn sm" data-copy="awCfgRust">복사</button></div>
+                <span class="view-hint">폴더 이름이 <code>aw-server-rust</code>가 아니라 <code>aw-server</code>뿐이라면, 그 폴더의 <code>aw-server.toml</code>에 대신 이걸 넣어요.</span>
+                <div class="codebox"><pre id="awCfgPy"></pre><button type="button" class="btn sm" data-copy="awCfgPy">복사</button></div>
+              </li>
+              <li>아이콘을 눌러 ActivityWatch를 완전히 끈 뒤(Quit) 다시 실행해요.</li>
+              <li>위 체크를 켜요. 크롬·엣지가 ‘로컬 네트워크 접근’을 물으면 허용해요. 사파리에서는 안 되니 PC 크롬이나 엣지를 써 주세요.</li>
+            </ol>
+          </details>
+        </fieldset>
+      </section>
+    </div>
+  </div>
+</div>
+
 <div id="overlay" class="overlay" hidden>
   <div class="ov-card"><div class="spin" id="ovSpin"></div><h2 id="ovTitle"></h2><p id="ovText"></p><div class="ov-acts" id="ovActs"></div></div>
 </div>
@@ -795,6 +1138,33 @@ const ICE_SERVERS = [
   { urls: 'stun:stun1.l.google.com:19302' },
 ];
 const PEER_OPTS = { config: { iceServers: ICE_SERVERS }, debug: 1 };
+// 중계 서버(TURN, Metered): 대시보드의 앱 이름(xxx.metered.live의 xxx)과 '자격 증명 API 키'를 넣으면 데이터·회사 와이파이에서도 연결돼요.
+const METERED_APP = '';
+const METERED_KEY = '';
+// 또는 Metered 대시보드의 자격 증명(사용자 이름·비밀번호)을 바로 넣어도 돼요.
+const TURN_USER = '73d183f37d29f1f2397433f0';
+const TURN_PASS = 'CflpHz+bTHJdL2bY';
+let iceCache = null;
+if (TURN_USER && TURN_PASS) {
+  iceCache = [{ urls: 'stun:stun.relay.metered.ca:80' }, ...ICE_SERVERS,
+    ...['turn:global.relay.metered.ca:80', 'turn:global.relay.metered.ca:80?transport=tcp', 'turn:global.relay.metered.ca:443', 'turns:global.relay.metered.ca:443?transport=tcp']
+      .map(urls => ({ urls, username: TURN_USER, credential: TURN_PASS }))];
+}
+const hasTurn = () => !!((METERED_APP && METERED_KEY) || (TURN_USER && TURN_PASS));
+async function peerOpts() {
+  if (METERED_APP && METERED_KEY && !iceCache) {
+    try {
+      const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 4000);
+      const r = await fetch(`https://${METERED_APP}.metered.live/api/v1/turn/credentials?apiKey=${encodeURIComponent(METERED_KEY)}`, { signal: ctl.signal });
+      clearTimeout(tm);
+      if (r.ok) { const l = await r.json(); if (Array.isArray(l) && l.length) iceCache = [...ICE_SERVERS, ...l]; }
+    } catch {}
+  }
+  const relay = !!(prof.relayOnly && iceCache);
+  if (prof.relayOnly && hasTurn() && !iceCache) setTimeout(() => toast('중계 서버에 닿지 못해서 이번에는 IP 숨기기 없이 연결해요', { ms: 5000 }), 600);
+  S.relayActive = relay;
+  return { ...PEER_OPTS, config: { iceServers: iceCache || ICE_SERVERS, ...(relay ? { iceTransportPolicy: 'relay' } : {}) } };
+}
 const PREFIX = 'nrh-';
 // 구글 로그인: Google Cloud에서 만든 '웹 애플리케이션 클라이언트 ID'를 따옴표 안에 넣으세요. 비워 두면 로그인 버튼이 숨겨져요.
 const GOOGLE_CLIENT_ID = '555974881717-esflqu7qjt5f0o7a60p32q0t27dqsbhu.apps.googleusercontent.com';
@@ -804,7 +1174,7 @@ const NOTE_COLORS = 5;
 const MEMBER_COLORS = ['#e5141f','#808080','#ff5a63','#a6a6a6','#b5101a','#8c8c8c','#ff7a81','#707070'];
 const ADJ = ['졸린','배고픈','수줍은','용감한','느긋한','반짝이는','말랑한','새침한','엉뚱한','다정한','꼼꼼한','씩씩한'];
 const NOUN = ['고양이','수달','펭귄','여우','다람쥐','햄스터','부엉이','고래','토끼','너구리','오리','판다'];
-const DECO0 = { bg:null, bgColor:'', dim:15, blur:0, frame:'plain', fc:'#ffffff', fw:6, shadow:true, stickers:[] };
+const DECO0 = { bg:null, bgColor:'', dim:15, blur:0, frame:'plain', fc:'#222222', fw:3, shadow:true, stickers:[] };
 
 /* ───────── 유틸 ───────── */
 const $ = (s, r = document) => r.querySelector(s);
@@ -835,6 +1205,7 @@ const COARSE = matchMedia('(pointer: coarse)');
 /* ───────── 프로필 ───────── */
 const prof = Object.assign({ cid: uid(12), nick: '', theme: 'auto', sound: true, avatar: null, google: null, coupleBy: {}, inDev: '', outDev: '', vol: { voice: 1, screen: 1, sfx: .8 } }, store.get('nrh.profile', {}));
 if (!prof.coupleBy || typeof prof.coupleBy !== 'object') prof.coupleBy = {};
+if (prof.themeV !== 2) { prof.theme = 'dark'; prof.themeV = 2; }
 if (!prof.vol || typeof prof.vol !== 'object') prof.vol = { voice: 1, screen: 1, sfx: .8 };
 const saveProf = () => store.set('nrh.profile', prof);
 saveProf();
@@ -855,11 +1226,9 @@ const calls = new Map();
 function applyTheme() {
   const r = document.documentElement;
   if (prof.theme === 'auto') r.removeAttribute('data-theme'); else r.setAttribute('data-theme', prof.theme);
-  const b = $('#themeBtn');
-  b.textContent = prof.theme === 'auto' ? '자동' : prof.theme === 'light' ? '밝게' : '어둡게';
-  b.title = '화면 밝기: ' + b.textContent + ' (눌러서 바꾸기)';
+  for (const c of $$('#themeChips [data-theme-set]')) c.setAttribute('aria-pressed', c.dataset.themeSet === prof.theme);
 }
-$('#themeBtn').onclick = () => { prof.theme = { auto: 'light', light: 'dark', dark: 'auto' }[prof.theme]; saveProf(); applyTheme(); };
+$('#themeChips').onclick = e => { const c = e.target.closest('[data-theme-set]'); if (!c) return; prof.theme = c.dataset.themeSet; saveProf(); applyTheme(); renderAccount(); };
 applyTheme();
 
 /* ───────── 토스트·오버레이 ───────── */
@@ -951,11 +1320,12 @@ function saveRoom() {
   if (!saveWarned) { saveWarned = true; toast('기기 저장 공간이 부족해서 일부를 저장하지 못했어요. 큰 이미지를 줄여 보세요.'); }
 }
 
-function startHost() {
+async function startHost() {
   S.isHost = true; S.code = myRoomCode(); S.joined = false;
   lobbyErr(''); loadRoomData(S.code);
   showOverlay('방 여는 중', '잠시만요…');
-  peer = new Peer(PREFIX + S.code, PEER_OPTS);
+  const opts = await peerOpts(); if (S.leaving) return;
+  peer = new Peer(PREFIX + S.code, opts);
   peer.on('open', id => {
     if (S.joined) return;
     S.me.id = id; S.me.color = colorFor(prof.cid); S.joined = true;
@@ -1001,6 +1371,7 @@ function hostOnData(conn, d) {
     broadcastMembers(); if (n && n !== old) sysAll(`${old}님이 이름을 ${n}(으)로 바꿨어요`); return;
   }
   if (d.t === 'mic') { rec.mic = !!d.on; broadcastMembers(); return; }
+  if (d.t === 'dm') { onDm(rec.id, d); return; }
   if (!RELAY.has(d.t)) return;
   handle(d);
   relay(d, rec.id);
@@ -1043,8 +1414,8 @@ function snapshot() {
   return { messages: S.messages.slice(-200), notes: S.notes, folders: S.folders, deco: S.deco, assets: S.assets, sounds: S.sounds, sharers: S.sharers, members: membersList(), study };
 }
 function membersList() {
-  const list = [{ id: S.me.id, nick: S.me.nick, color: S.me.color, host: true, mic: S.micOn, avatar: S.me.avatar, gsub: S.me.gsub }];
-  for (const r of S.conns.values()) if (r.approved) list.push({ id: r.id, nick: r.nick, color: r.color, host: false, mic: r.mic, auto: S.room.auto.includes(r.cid) || !!(r.gsub && couple()?.sub === r.gsub), avatar: r.avatar, gsub: r.gsub });
+  const list = [{ id: S.me.id, nick: S.me.nick, color: S.me.color, host: true, mic: S.micOn, avatar: S.me.avatar, gsub: S.me.gsub, cid: prof.cid }];
+  for (const r of S.conns.values()) if (r.approved) list.push({ id: r.id, nick: r.nick, color: r.color, host: false, mic: r.mic, auto: S.room.auto.includes(r.cid) || !!(r.gsub && couple()?.sub === r.gsub), avatar: r.avatar, gsub: r.gsub, cid: r.cid });
   return list;
 }
 function broadcastMembers() {
@@ -1086,13 +1457,14 @@ $('#pendingChip').onclick = () => setTab('people');
 
 /* ───────── 손님 ───────── */
 let hostTimer = null, retryCount = 0;
-function startGuest(code) {
+async function startGuest(code) {
   S.isHost = false; S.code = code; S.joined = false; lobbyErr('');
   showOverlay('연결하는 중', '방을 찾고 있어요…', [{ label: '취소', onClick: () => teardown() }]);
-  peer = new Peer(PEER_OPTS);
+  const opts = await peerOpts(); if (S.leaving) return;
+  peer = new Peer(opts);
   peer.on('open', id => { S.me.id = id; S.me.color = colorFor(prof.cid); connectHost(); });
   peer.on('call', onCall);
-  peer.on('connection', c => c.on('open', () => c.close()));
+  peer.on('connection', c => { if (c.metadata?.dm && S.joined && memberOf(c.peer)) { dmConns.set(c.peer, c); wireDm(c); } else c.on('open', () => c.close()); });
   peer.on('error', onPeerError);
   peer.on('disconnected', onPeerDisconnected);
 }
@@ -1139,6 +1511,7 @@ function guestOnData(d) {
       return;
     }
     case 'members': if (Array.isArray(d.list)) applyMembers(d.list); return;
+    case 'dm': onDm(PREFIX + S.code, d); return;
     default: if (RELAY.has(d.t)) handle(d);
   }
 }
@@ -1167,7 +1540,7 @@ function onPeerError(err) {
     S.leaving = true;
     showOverlay('이 방이 이미 열려 있어요', '다른 탭이나 창에서 이 방을 열어 둔 것 같아요. 그 창을 쓰거나 새 방 코드를 만들 수 있어요.', [
       { label: '로비로', onClick: () => teardown() },
-      { label: '새 방 코드로 열기', primary: true, onClick: () => { store.set('nrh.myroom', uid(8)); $('#myRoomCode').textContent = myRoomCode(); teardown(true); startHost(); } },
+      { label: '새 방 코드로 열기', primary: true, onClick: () => { store.set('nrh.myroom', uid(8)); $('#myRoomCode').textContent = myRoomCode(); teardown(true); setTimeout(startHost, 350); } },
     ], false);
     return;
   }
@@ -1194,7 +1567,8 @@ function handle(d) {
     case 'chat': {
       const m = sanitizeMsg(d.m, d); if (!m || S.messages.some(x => x.id === m.id)) return;
       S.messages.push(m); if (S.messages.length > 400) S.messages.splice(0, S.messages.length - 400);
-      appendMsg(m, true); clearTyper(m.from);
+      if (S.chan === 'all') appendMsg(m, true); else if (m.kind !== 'system') { S.allUnread++; renderChanBar(); }
+      clearTyper(m.from);
       if (m.from !== S.me.id && m.kind !== 'system') notifyMsg();
       scheduleSave(); return;
     }
@@ -1236,14 +1610,14 @@ function handle(d) {
 }
 
 function applyMembers(list) {
-  S.members = list.filter(m => m && typeof m.id === 'string').slice(0, MAX_PEOPLE).map(m => ({ id: m.id, nick: cleanNick(m.nick) || '이름 없음', color: MEMBER_COLORS.includes(m.color) ? m.color : '#888', host: !!m.host, mic: !!m.mic, auto: !!m.auto, avatar: isAvatar(m.avatar) ? m.avatar : '', gsub: String(m.gsub || '').slice(0, 40) }));
+  S.members = list.filter(m => m && typeof m.id === 'string').slice(0, MAX_PEOPLE).map(m => ({ id: m.id, nick: cleanNick(m.nick) || '이름 없음', color: MEMBER_COLORS.includes(m.color) ? m.color : '#888', host: !!m.host, mic: !!m.mic, auto: !!m.auto, avatar: isAvatar(m.avatar) ? m.avatar : '', gsub: String(m.gsub || '').slice(0, 40), cid: String(m.cid || '').slice(0, 40) }));
   const mids = new Set(S.members.map(m => m.id));
   S.sharers = S.sharers.filter(x => mids.has(x));
   if (S.view && !S.sharers.includes(S.view)) S.view = S.sharers[S.sharers.length - 1] || null;
   const ids = new Set(S.members.map(m => m.id));
   for (const id of [...S.remoteScreens.keys()]) if (!ids.has(id)) S.remoteScreens.delete(id);
   for (const id of Object.keys(S.study)) if (!ids.has(id)) delete S.study[id];
-  renderMembers(); syncCalls(); updateStage(); renderStudyLive(); renderCouple(); renderIO();
+  renderMembers(); syncCalls(); updateStage(); renderStudyLive(); renderCouple(); renderIO(); renderChanBar(); updateComposer();
 }
 const nickOf = id => S.members.find(m => m.id === id)?.nick || '누군가';
 const memberOf = id => S.members.find(m => m.id === id);
@@ -1351,8 +1725,8 @@ $$('.js-mic').forEach(b => { b.onclick = toggleMic; });
 const vid = $('#screenVid');
 function updateStage() {
   let stream = null, label = '';
-  if (S.view && S.view === S.me.id && S.localScreen) { stream = S.localScreen; label = 'REC · 내 화면'; }
-  else if (S.view && S.remoteScreens.get(S.view)) { stream = S.remoteScreens.get(S.view); label = 'LIVE · ' + nickOf(S.view); }
+  if (S.view && S.view === S.me.id && S.localScreen) { stream = S.localScreen; label = '내 화면 공유 중'; }
+  else if (S.view && S.remoteScreens.get(S.view)) { stream = S.remoteScreens.get(S.view); label = nickOf(S.view) + '님 화면'; }
   vid.volume = prof.vol.screen;
   if (vid.srcObject !== stream) {
     vid.srcObject = stream;
@@ -1447,7 +1821,10 @@ function sanitizeMsg(m, d) {
   if (kind === 'text' && !out.text.trim()) return null;
   return out;
 }
-function sendChat(part) { emit({ t: 'chat', m: { id: uid(10), ts: Date.now(), kind: 'text', ...part } }); }
+function sendChat(part) {
+  if (S.chan && S.chan !== 'all') { const m = memberByKey(S.chan); if (!m) { toast('상대가 방에 없어서 보낼 수 없어요'); return; } sendDm(m.id, part); return; }
+  emit({ t: 'chat', m: { id: uid(10), ts: Date.now(), kind: 'text', ...part } });
+}
 function sysLocal(text) { const m = sanitizeMsg({ kind: 'system', text }, { from: '', nick: '' }); S.messages.push(m); appendMsg(m, true); }
 const linkify = s => esc(s).replace(/https?:\/\/[^\s<]+[^\s<.,;:!?)'"]/g, u => `<a href="${u}" target="_blank" rel="noopener noreferrer">${u}</a>`);
 let lastMsg = null;
@@ -1472,15 +1849,15 @@ function appendMsg(m, live) {
   const nearBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 120;
   box.append(msgEl(m));
   if (!live || nearBottom || m.from === S.me.id) requestAnimationFrame(() => { box.scrollTop = box.scrollHeight; });
-  $('#chatCount').textContent = S.messages.filter(x => x.kind !== 'system').length ? `${S.messages.filter(x => x.kind !== 'system').length}개` : '';
+  updateComposer();
 }
-function renderChat() { $('#msgs').innerHTML = ''; lastMsg = null; for (const m of S.messages) appendMsg(m, false); }
+function renderChat() { $('#msgs').innerHTML = ''; lastMsg = null; const l = currentList(); for (const m of l) appendMsg(m, false); if (!l.length && S.chan !== 'all') $('#msgs').innerHTML = '<div class="sys">여기서 나눈 메시지는 두 사람에게만 보여요</div>'; updateComposer(); }
 $('#msgs').addEventListener('click', e => {
   const img = e.target.closest('.msg-img'); if (img) { openLightbox(img.src); return; }
   const btn = e.target.closest('[data-act]');
   const el = e.target.closest('.msg');
   if (!btn) { if (el && COARSE.matches) { $$('.msg.show-acts').forEach(x => x !== el && x.classList.remove('show-acts')); el.classList.toggle('show-acts'); } return; }
-  const m = S.messages.find(x => x.id === el?.dataset.id); if (!m) return;
+  const m = currentList().find(x => x.id === el?.dataset.id); if (!m) return;
   if (btn.dataset.act === 'open') openLightbox(m.src);
   if (btn.dataset.act === 'copy') copyText(m.kind === 'note' ? [m.note.title, m.note.body].filter(Boolean).join('\n') : m.text);
   if (btn.dataset.act === 'tonote') { newNote(m.kind === 'note' ? { title: m.note.title, body: m.note.body } : { body: m.text }, false); toast('메모에 저장했어요'); }
@@ -1496,7 +1873,7 @@ const isChatVisible = () => DESK.matches || $('#app').dataset.mtab === 'chat';
 const msgIn = $('#msgIn');
 function autosize() { msgIn.style.height = 'auto'; msgIn.style.height = Math.min(msgIn.scrollHeight + 2, 140) + 'px'; }
 let lastTypingSent = 0;
-msgIn.addEventListener('input', () => { autosize(); const now = Date.now(); if (msgIn.value.trim() && now - lastTypingSent > 2500) { lastTypingSent = now; emit({ t: 'typing' }); } });
+msgIn.addEventListener('input', () => { autosize(); const now = Date.now(); if (S.chan === 'all' && msgIn.value.trim() && now - lastTypingSent > 2500) { lastTypingSent = now; emit({ t: 'typing' }); } });
 msgIn.addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey && !e.isComposing && e.keyCode !== 229 && !COARSE.matches) { e.preventDefault(); $('#composer').requestSubmit(); }
 });
@@ -1685,7 +2062,7 @@ $('#folderBar').onclick = e => {
 };
 function renderPinBar() {
   const pins = S.notes.filter(n => n.pinned).sort((a, b) => b.updated - a.updated);
-  const bar = $('#pinBar'); bar.hidden = !pins.length; if (!pins.length) return;
+  const bar = $('#pinBar'); bar.hidden = !pins.length || (S.chan && S.chan !== 'all'); if (bar.hidden) return;
   const p = pins[0];
   bar.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="color:var(--accent)"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><b>${esc(p.title || '고정 메모')}</b><span>${esc(p.html ? 'HTML 메모' : p.body.replace(/\s+/g, ' ').slice(0, 80))}</span>${pins.length > 1 ? `<em>+${pins.length - 1}</em>` : ''}`;
   bar.title = '고정 메모 열기';
@@ -1913,13 +2290,14 @@ function renderMembers() {
     const li = document.createElement('li');
     const tags = [m.host ? '<span class="tag">방장</span>' : '', m.id === S.me.id ? '<span class="tag">나</span>' : '', S.sharers.includes(m.id) ? '<span class="tag live">화면 공유 중</span>' : '', m.mic ? '<span class="tag live">마이크</span>' : '', m.auto ? '<span class="tag">자동 허락</span>' : ''].join('');
     const isC = m.gsub && couple()?.sub === m.gsub;
-    li.innerHTML = `${avHTML(m)}<span class="mname">${esc(m.nick)}</span>${isC ? '<span class="heart" title="커플">♥</span>' : ''}${tags}<span class="mspacer"></span>${S.isHost && !m.host ? `<button type="button" class="btn sm ghost host-only" data-kick="${esc(m.id)}">내보내기</button>` : ''}`;
+    li.innerHTML = `${avHTML(m)}<span class="mname">${esc(m.nick)}</span>${isC ? '<span class="heart" title="커플">♥</span>' : ''}${tags}<span class="mspacer"></span>${m.id !== S.me.id ? `<button type="button" class="btn sm" data-dmto="${esc(m.id)}">메시지</button>` : ''}${S.isHost && !m.host ? `<button type="button" class="btn sm ghost host-only" data-kick="${esc(m.id)}">내보내기</button>` : ''}`;
     ul.append(li);
   }
   $('#peopleCount').textContent = `${S.members.length}명`;
   $('#autoCount').textContent = `자동 허락된 기기 ${S.room.auto.length}대`;
 }
 $('#members').addEventListener('click', e => {
+  const dmb = e.target.closest('[data-dmto]'); if (dmb) { startDm(dmb.dataset.dmto); return; }
   const b = e.target.closest('[data-kick]'); if (!b) return;
   if (!b.classList.contains('armed')) { b.classList.add('armed'); b.textContent = '정말 내보낼까요?'; setTimeout(() => { b.classList.remove('armed'); b.textContent = '내보내기'; }, 3000); return; }
   kick(b.dataset.kick);
@@ -2058,7 +2436,7 @@ function renderStudyLive() {
   const now = Date.now(), today = msIn(dayStart(0), dayStart(1));
   const st = $('#tmState');
   st.className = 'tm-state' + (SD.state === 'run' ? ' run' : '');
-  st.querySelector('span').textContent = SD.state === 'run' ? `REC · ${SD.tag}` : SD.state === 'pause' ? `쉬는 중 ${fmt(now - SD.breakStart)}` : 'STANDBY';
+  st.querySelector('span').textContent = SD.state === 'run' ? `${SD.tag} 하는 중` : SD.state === 'pause' ? `쉬는 중 ${fmt(now - SD.breakStart)}` : '대기 중';
   $('#tmToday').textContent = fmt(today);
   $('#tmSession').textContent = `이번 회차 ${fmt(sessionMs())}`;
   $('#tmGoalTxt').textContent = `목표 ${Math.min(999, Math.round(today / (SD.goal * 600)))}%`;
@@ -2157,7 +2535,7 @@ async function awRefresh() {
 function renderAw() {
   const rows = S.awTop.map(x => [x.a, x.s * 1000]);
   $('#awApps').innerHTML = SD.aw ? (rows.length ? bars(rows) : '<div class="view-hint">아직 쌓인 기록이 없어요</div>') : '';
-  $('#awModes').hidden = !SD.aw;
+  $('#awModes').hidden = !SD.aw; $('#awOffHint').hidden = SD.aw;
 }
 function awSetup() {
   clearInterval(awTimer);
@@ -2241,6 +2619,7 @@ function renderAccount() {
   $('#acctName').textContent = me.nick; $('#acctMail').textContent = prof.google ? prof.google.email : '로그인 안 함';
   $('#avReset').hidden = !prof.avatar;
   gButtonInto($('#gArea'));
+  renderDdChips();
   const chip = $('#coupleChip');
   chip.hidden = !c; if (c) { chip.textContent = `♥ D+${ddayOf(c.since)}`; chip.title = `${c.name}님과 커플 · ${c.since}부터`; }
 }
@@ -2399,14 +2778,14 @@ function openPop(id) {
   const pop = $('#' + id); const was = !pop.hidden; closePops(); if (was) return;
   pop.hidden = false; $(`[aria-controls="${id}"]`)?.setAttribute('aria-expanded', 'true');
   if (DESK.matches) { const bar = $('.stage-bar'), col = $('.stage-col'); pop.style.bottom = (col.clientHeight - bar.offsetTop + 8) + 'px'; } else pop.style.bottom = '';
-  if (id === 'ioPop') listDevices(); if (id === 'sbPop') renderPads();
+  if (id === 'sbPop') renderPads();
 }
-function closePops() { $$('.pop').forEach(p => { p.hidden = true; }); $('#sbBtn').setAttribute('aria-expanded', 'false'); $('#ioBtn').setAttribute('aria-expanded', 'false'); }
-$('#sbBtn').setAttribute('aria-controls', 'sbPop'); $('#ioBtn').setAttribute('aria-controls', 'ioPop');
+function closePops() { $$('.pop').forEach(p => { p.hidden = true; }); $('#sbBtn').setAttribute('aria-expanded', 'false'); }
+$('#sbBtn').setAttribute('aria-controls', 'sbPop');
 $('#sbBtn').onclick = e => { e.stopPropagation(); openPop('sbPop'); };
-$('#ioBtn').onclick = e => { e.stopPropagation(); openPop('ioPop'); };
+$('#ioBtn').onclick = () => openSettings('sound');
 $$('.pop [data-close]').forEach(b => { b.onclick = closePops; });
-document.addEventListener('pointerdown', e => { if (!e.target.closest('.pop, #sbBtn, #ioBtn')) closePops(); });
+document.addEventListener('pointerdown', e => { if (!e.target.closest('.pop, #sbBtn')) closePops(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closePops(); });
 
 /* ───────── 사운드보드 ───────── */
@@ -2480,10 +2859,215 @@ $('#sfxInput').onchange = async e => {
   emit({ t: 'sound-add', sound }); toast(`‘${sound.name}’ 소리를 넣었어요`);
 };
 document.addEventListener('keydown', e => {
-  if (!S.joined || e.metaKey || e.ctrlKey || e.altKey || !/^[1-9]$/.test(e.key)) return;
+  if (!S.joined || prof.sfxKeys === false || !$('#settings').hidden || e.metaKey || e.ctrlKey || e.altKey || !/^[1-9]$/.test(e.key)) return;
   if (e.target.closest?.('input, textarea, select, [contenteditable="true"]')) return;
   const p = padList()[+e.key - 1]; if (p) triggerSfx(p.id);
 });
+
+
+/* ───────── 설정 창 ───────── */
+const SEC_TITLES = { account: '내 계정', couple: '커플', sound: '소리', general: '화면·알림', room: '방', dday: '디데이', timer: '타이머' };
+function openSettings(sec = 'account') {
+  closePops();
+  $('#settings').hidden = false; showSec(sec);
+  renderAccount(); renderCouple(); renderTimerStatic(); listDevices(); renderDdays();
+  $('#dmToastChk').checked = prof.dmToast !== false; $('#sfxKeysChk').checked = prof.sfxKeys !== false; $('#soundChk').checked = prof.sound;
+  $('.guest-only').hidden = S.isHost;
+  renderRelay();
+}
+function showSec(sec) {
+  for (const b of $$('#setNav [data-sec]')) b.setAttribute('aria-selected', b.dataset.sec === sec);
+  for (const x of $$('.set-sec')) x.hidden = x.dataset.sec !== sec;
+  $('#setTitle').textContent = SEC_TITLES[sec] || '설정';
+}
+function closeSettings() { $('#settings').hidden = true; }
+$('#setBtn').onclick = () => openSettings();
+$('#setNav').onclick = e => { const b = e.target.closest('[data-sec]'); if (b) showSec(b.dataset.sec); };
+$('#setClose').onclick = closeSettings;
+$('#settings').addEventListener('pointerdown', e => { if (e.target.id === 'settings') closeSettings(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#settings').hidden) closeSettings(); });
+$('#dmToastChk').onchange = e => { prof.dmToast = e.target.checked; saveProf(); };
+function renderRelay() {
+  const ok = hasTurn();
+  $('#relayChk').disabled = !ok; $('#relayChk').checked = ok && !!prof.relayOnly;
+  $('#relayHint').textContent = !ok ? '중계 서버 키가 아직 없어서 켤 수 없어요. 사이트 주인이 Metered 키를 넣으면 켜져요.'
+    : !prof.relayOnly ? '켜면 같은 방 사람에게 내 IP 대신 중계 서버 주소가 보여요. 데이터를 조금 더 쓰고, 다음에 방에 들어갈 때부터 적용돼요.'
+    : S.joined && !S.relayActive ? '켜져 있어요. 지금 방에는 아직 적용 전이라, 나갔다 다시 들어오면 숨겨져요.'
+    : S.joined ? '지금 내 IP는 숨겨져 있어요. 다른 사람이 IP를 숨기려면 각자 켜야 해요.' : '켜져 있어요. 방에 들어가면 내 IP가 숨겨져요.';
+}
+$('#relayChk').onchange = e => { prof.relayOnly = e.target.checked; saveProf(); renderRelay(); };
+$('#sfxKeysChk').onchange = e => { prof.sfxKeys = e.target.checked; saveProf(); };
+
+/* ───────── 개인 채팅 ───────── */
+S.chan = 'all'; S.dms = new Map(); S.allUnread = 0;
+const dmConns = new Map();
+const memberKey = m => m.cid || m.gsub || m.id;
+const memberByKey = key => S.members.find(m => memberKey(m) === key);
+function loadDmIndex() {
+  for (const x of store.get('nrh.dmIndex', [])) if (x && x.key && !S.dms.has(x.key)) S.dms.set(x.key, { key: x.key, nick: cleanNick(x.nick) || '누군가', msgs: null, unread: 0 });
+}
+function saveDmIndex() { store.set('nrh.dmIndex', [...S.dms.values()].slice(-20).map(t => ({ key: t.key, nick: t.nick }))); }
+function threadMsgs(t) { if (!t.msgs) t.msgs = (store.get('nrh.dm.' + t.key, []) || []).map(x => sanitizeMsg(x, x)).filter(Boolean); return t.msgs; }
+function threadFor(peerId) {
+  const m = memberOf(peerId); const key = m ? memberKey(m) : peerId;
+  let t = S.dms.get(key);
+  if (!t) { t = { key, nick: m?.nick || '누군가', msgs: null, unread: 0 }; S.dms.set(key, t); saveDmIndex(); }
+  if (m && t.nick !== m.nick) { t.nick = m.nick; saveDmIndex(); }
+  threadMsgs(t); return t;
+}
+function saveDm(t) { const k = 'nrh.dm.' + t.key, msgs = t.msgs.slice(-200); if (!store.set(k, msgs)) store.set(k, msgs.filter(m => m.kind !== 'image')); }
+function wireDm(c) {
+  c._queue = c._queue || [];
+  c.on('open', () => { c._pending = false; for (const d of c._queue) { try { c.send(d); } catch {} } c._queue = []; });
+  c.on('data', d => { if (d && d.t === 'dm') onDm(c.peer, d); });
+  const drop = () => { if (dmConns.get(c.peer) === c) dmConns.delete(c.peer); };
+  c.on('close', drop); c.on('error', drop);
+}
+function dmLink(peerId) {
+  if (!peer || !S.joined) return null;
+  if (S.isHost) { const r = S.conns.get(peerId); return r?.approved && r.conn.open ? r.conn : null; }
+  if (peerId === PREFIX + S.code) return S.hostConn?.open ? S.hostConn : null;
+  const old = dmConns.get(peerId); if (old && (old.open || old._pending)) return old;
+  const c = peer.connect(peerId, { metadata: { dm: 1 } }); if (!c) return null;
+  c._pending = true; dmConns.set(peerId, c); wireDm(c); return c;
+}
+function sendDm(peerId, part) {
+  const c = dmLink(peerId);
+  if (!c) { toast('지금은 이 사람에게 보낼 수 없어요. 같은 방에 있는지 확인해 주세요.'); return; }
+  const m = { id: uid(10), ts: Date.now(), kind: 'text', ...part }, d = { t: 'dm', m };
+  if (c.open) { try { c.send(d); } catch {} } else c._queue.push(d);
+  const mm = sanitizeMsg(m, { from: S.me.id, nick: S.me.nick, color: S.me.color }); if (!mm) return;
+  const t = threadFor(peerId); t.msgs.push(mm); saveDm(t);
+  if (S.chan === t.key) appendMsg(mm, true);
+}
+function onDm(from, d) {
+  const m = memberOf(from); if (!m) return;
+  const mm = sanitizeMsg(d.m, { from, nick: m.nick, color: m.color }); if (!mm || mm.kind === 'system') return;
+  const t = threadFor(from); if (t.msgs.some(x => x.id === mm.id)) return;
+  t.msgs.push(mm); saveDm(t);
+  const here = S.chan === t.key;
+  if (here) appendMsg(mm, true);
+  if (!here || !isChatVisible() || document.hidden) {
+    t.unread++;
+    if (prof.dmToast !== false && !here) {
+      const pv = mm.kind === 'image' ? '사진' : mm.kind === 'note' ? '메모' : mm.text.slice(0, 40);
+      toast(`<b>${esc(m.nick)}</b>님의 개인 메시지<br><span style="opacity:.75">${esc(pv)}</span>`, { html: true, ms: 5000, actions: [{ label: '보기', yes: true, onClick: () => openChan(t.key) }] });
+    }
+    notifyMsg();
+  }
+  renderChanBar();
+}
+function currentList() { return S.chan === 'all' ? S.messages : (S.dms.get(S.chan) ? threadMsgs(S.dms.get(S.chan)) : []); }
+function openChan(key) {
+  if (key !== 'all' && !S.dms.has(key)) key = 'all';
+  S.chan = key;
+  if (key === 'all') S.allUnread = 0; else S.dms.get(key).unread = 0;
+  setTab('chat'); renderChat(); renderChanBar(); updateComposer(); closeDmPick();
+}
+function updateComposer() {
+  const dm = S.chan !== 'all', t = S.dms.get(S.chan), m = dm ? memberByKey(S.chan) : null;
+  const off = dm && !m;
+  msgIn.disabled = off; $('#imgBtn').disabled = off; $('#composer .send').disabled = off;
+  msgIn.placeholder = !dm ? '메시지 보내기' : off ? `${t?.nick || '상대'}님이 방에 없어서 보낼 수 없어요` : `${m.nick}님에게만 보내기`;
+  if (dm) $('#pinBar').hidden = true; else renderPinBar();
+  $('#chatTitle').textContent = dm ? `${t?.nick || ''}님과 개인 채팅` : '채팅';
+  $('#chatCount').textContent = dm ? '둘만 보여요' : (S.messages.filter(x => x.kind !== 'system').length ? `${S.messages.filter(x => x.kind !== 'system').length}개` : '');
+}
+function renderChanBar() {
+  const bar = $('#chanBar'); if (!bar) return;
+  const items = [...S.dms.values()];
+  bar.innerHTML = `<button type="button" class="chan" data-chan="all" aria-pressed="${S.chan === 'all'}">전체 채팅${S.allUnread ? `<span class="badge">${S.allUnread}</span>` : ''}</button>`
+    + items.map(t => { const m = memberByKey(t.key); return `<button type="button" class="chan${m ? '' : ' away'}" data-chan="${esc(t.key)}" aria-pressed="${S.chan === t.key}">${avHTML(m || { nick: t.nick, color: '#6f747d' }, 'sm')}<span>${esc(t.nick)}</span>${t.unread ? `<span class="badge">${t.unread}</span>` : ''}</button>`; }).join('')
+    + `<button type="button" class="chan add" id="dmNew" aria-label="개인 채팅 시작">+ 개인 채팅</button>`;
+  const dmUnread = items.reduce((a, t) => a + t.unread, 0);
+  $('#chatBadge').textContent = (S.unread || 0) + dmUnread ? (S.unread || 0) : '';
+}
+$('#chanBar').onclick = e => {
+  if (e.target.closest('#dmNew')) { toggleDmPick(); return; }
+  const b = e.target.closest('[data-chan]'); if (b) openChan(b.dataset.chan);
+};
+function toggleDmPick() {
+  const pick = $('#dmPick'); if (!pick.hidden) { closeDmPick(); return; }
+  const others = S.members.filter(m => m.id !== S.me.id);
+  pick.innerHTML = others.length ? others.map(m => `<button type="button" data-dm="${esc(m.id)}">${avHTML(m, 'sm')}<span>${esc(m.nick)}</span></button>`).join('') : '<p class="view-hint" style="margin:6px">방에 다른 사람이 들어오면 개인 채팅을 할 수 있어요.</p>';
+  pick.hidden = false;
+}
+function closeDmPick() { const p = $('#dmPick'); if (p) p.hidden = true; }
+$('#dmPick').onclick = e => { const b = e.target.closest('[data-dm]'); if (!b) return; const t = threadFor(b.dataset.dm); openChan(t.key); };
+document.addEventListener('pointerdown', e => { if (!e.target.closest('#dmPick, #dmNew')) closeDmPick(); });
+function startDm(id) { const t = threadFor(id); openChan(t.key); }
+
+
+/* ───────── 디데이 ───────── */
+if (!Array.isArray(prof.ddays)) prof.ddays = [];
+function isoOf(d) { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+function dayDiff(iso) { const d = new Date(iso + 'T00:00:00'); if (isNaN(d)) return null; const t = new Date(); t.setHours(0, 0, 0, 0); return Math.round((d - t) / 864e5); }
+function ddLabel(x) {
+  const diff = dayDiff(x.date); if (diff == null) return '';
+  if (x.mode === 'since') return diff > 0 ? `D-${diff}` : `D+${-diff + 1}`;
+  return diff > 0 ? `D-${diff}` : diff === 0 ? 'D-DAY' : `D+${-diff}`;
+}
+function coupleMilestones(since) {
+  const s = new Date(since + 'T00:00:00'); if (isNaN(s)) return [];
+  const today = dayStart(0), out = [];
+  for (let n = 100; n <= 20000 && out.length < 3; n += 100) { const d = new Date(s); d.setDate(d.getDate() + n - 1); if (d.getTime() >= today) out.push({ label: `${n}일`, date: d }); }
+  for (let y = 1; y <= 60; y++) { const d = new Date(s); d.setFullYear(d.getFullYear() + y); if (d.getTime() >= today) { out.push({ label: `${y}주년`, date: d }); break; } }
+  return out.sort((a, b) => a.date - b.date).slice(0, 3);
+}
+function renderDdays() {
+  const c = couple(), cbox = $('#ddCouple');
+  if (c) {
+    const ms = coupleMilestones(c.since);
+    cbox.innerHTML = `<fieldset><legend>${esc(c.name)}님과 · D+${ddayOf(c.since)}</legend>${ms.map(m => { const dd = dayDiff(isoOf(m.date)); return `<div class="dd-row"><span class="dd-tt">${m.label}</span><span class="dd-dt">${isoOf(m.date)}</span><b class="dd-lb">${dd === 0 ? '오늘!' : 'D-' + dd}</b></div>`; }).join('')}<p class="view-hint">사귄 날은 설정 › 커플에서 바꿀 수 있어요.</p></fieldset>`;
+  } else cbox.innerHTML = '';
+  const list = [...prof.ddays].sort((a, b) => (dayDiff(a.date) ?? 0) - (dayDiff(b.date) ?? 0));
+  $('#ddList').innerHTML = list.length ? list.map(x => `<div class="dd-row"><button type="button" class="dd-star" data-ddtop="${esc(x.id)}" aria-pressed="${!!x.top}" title="위쪽에 띄우기">★</button><span class="dd-tt">${esc(x.title)}</span><span class="dd-dt">${esc(x.date)}</span><b class="dd-lb">${ddLabel(x)}</b><button type="button" class="dd-x" data-ddrm="${esc(x.id)}" aria-label="${esc(x.title)} 지우기">×</button></div>`).join('')
+    : '<p class="view-hint">아직 없어요. 아래에서 시험, 여행, 생일 같은 날을 추가해 보세요.</p>';
+  if (!$('#ddDate').value) $('#ddDate').value = todayISO();
+}
+function renderDdChips() {
+  const box = $('#ddChips'); if (!box) return;
+  box.innerHTML = prof.ddays.filter(x => x.top).slice(0, 2).map(x => `<button type="button" class="dd-chip" data-ddopen>${esc(x.title)} <b>${ddLabel(x)}</b></button>`).join('');
+}
+$('#ddChips').onclick = e => { if (e.target.closest('[data-ddopen]')) openSettings('dday'); };
+$('#ddAdd').onclick = () => {
+  const title = $('#ddTitle').value.replace(/\s+/g, ' ').trim().slice(0, 20), date = $('#ddDate').value;
+  if (!title) { toast('디데이 이름을 적어 주세요'); $('#ddTitle').focus(); return; }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) { toast('날짜를 골라 주세요'); return; }
+  if (prof.ddays.length >= 30) { toast('디데이는 30개까지 만들 수 있어요'); return; }
+  const top = $('#ddTop').checked && prof.ddays.filter(x => x.top).length < 2;
+  prof.ddays.push({ id: uid(8), title, date, mode: $('#ddMode').value === 'since' ? 'since' : 'until', top });
+  saveProf(); $('#ddTitle').value = ''; renderDdays(); renderDdChips();
+  toast($('#ddTop').checked && !top ? '추가했어요. 위쪽에는 2개까지만 떠요.' : '디데이를 추가했어요');
+};
+$('#ddTitle').onkeydown = e => { if (e.key === 'Enter' && !e.isComposing) $('#ddAdd').click(); };
+$('#ddList').onclick = e => {
+  const t = e.target.closest('[data-ddtop]');
+  if (t) { const x = prof.ddays.find(y => y.id === t.dataset.ddtop); if (!x) return; if (!x.top && prof.ddays.filter(y => y.top).length >= 2) { toast('위쪽에는 2개까지 띄울 수 있어요'); return; } x.top = !x.top; saveProf(); renderDdays(); renderDdChips(); return; }
+  const r = e.target.closest('[data-ddrm]');
+  if (r) {
+    if (!r.classList.contains('armed')) { r.classList.add('armed'); r.textContent = '지울까요?'; setTimeout(() => { r.classList.remove('armed'); r.textContent = '×'; }, 2500); return; }
+    prof.ddays = prof.ddays.filter(y => y.id !== r.dataset.ddrm); saveProf(); renderDdays(); renderDdChips();
+  }
+};
+
+/* ───────── 앱 안 브라우저 안내 · 화면 꺼짐 방지 ───────── */
+(function inAppCheck() {
+  const ua = navigator.userAgent;
+  const kakao = /KAKAOTALK/i.test(ua);
+  if (!(kakao || /Instagram|FBAN|FBAV|Line\/|NAVER\(|DaumApps|everytimeApp|; wv\)/i.test(ua))) return;
+  const box = $('#inappBox'); box.hidden = false;
+  box.innerHTML = `<b>앱 안 브라우저로 열렸어요</b><span>여기서는 구글 로그인, 화면 공유, 마이크가 막힐 수 있어요. 사파리나 크롬으로 열어 주세요.</span><div class="row">${kakao ? '<button type="button" class="btn sm primary" id="openExt">사파리·크롬으로 열기</button>' : ''}<button type="button" class="btn sm" id="copyHere">주소 복사</button></div>`;
+  $('#openExt')?.addEventListener('click', () => { location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(location.href); });
+  $('#copyHere').onclick = () => copyText(location.href);
+})();
+let wakeLock = null;
+async function keepAwake() {
+  if (!S.joined || !('wakeLock' in navigator) || document.hidden) return;
+  try { wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener?.('release', () => { wakeLock = null; }); } catch {}
+}
+document.addEventListener('visibilitychange', () => { if (!document.hidden && S.joined && !wakeLock) keepAwake(); });
+renderDdChips();
 
 /* ───────── 알림음 ───────── */
 function beep() {
@@ -2505,7 +3089,7 @@ function setTab(name) {
   else { $('#side').dataset.tab = name; app.dataset.mtab = name; }
   for (const b of $$('#side .ptabs [data-tab]')) b.setAttribute('aria-selected', b.dataset.tab === $('#side').dataset.tab);
   for (const b of $$('#mtabs [data-tab]')) b.setAttribute('aria-selected', b.dataset.tab === app.dataset.mtab);
-  if (isChatVisible()) { S.unread = 0; $('#chatBadge').textContent = ''; const box = $('#msgs'); requestAnimationFrame(() => { box.scrollTop = box.scrollHeight; }); }
+  if (isChatVisible()) { S.unread = 0; $('#chatBadge').textContent = ''; if (S.chan === 'all') S.allUnread = 0; else if (S.dms.get(S.chan)) S.dms.get(S.chan).unread = 0; renderChanBar(); const box = $('#msgs'); requestAnimationFrame(() => { box.scrollTop = box.scrollHeight; }); }
 }
 $('#side .ptabs').onclick = e => { const b = e.target.closest('[data-tab]'); if (b) setTab(b.dataset.tab); };
 $('#mtabs').onclick = e => { const b = e.target.closest('[data-tab]'); if (b) setTab(b.dataset.tab); };
@@ -2538,7 +3122,8 @@ function enterApp() {
     : '방장이 창을 닫으면 방이 끝나요. 메모와 꾸미기는 방장 기기에 저장돼요.';
   $('#notesHint').textContent = DESK.matches ? '잊으면 안 되는 건 여기 적어 두세요. 모두 같이 고칠 수 있어요. 왼쪽 손잡이를 끌어 채팅창에 놓으면 채팅으로 보내져요.' : '잊으면 안 되는 건 여기 적어 두세요. 모두 같이 고칠 수 있어요. 왼쪽 손잡이를 끌어 아래 ‘채팅’ 탭에 놓거나 ‘채팅으로’를 누르면 보내져요.';
   setTab(DESK.matches ? 'notes' : 'chat');
-  renderAll(); startClock(); renderTimerStatic(); renderAccount(); renderCouple(); renderPads(); listDevices(); setTimeout(broadcastStudy, 400);
+  S.chan = 'all'; loadDmIndex(); keepAwake();
+  renderAll(); startClock(); renderTimerStatic(); renderAccount(); renderCouple(); renderPads(); listDevices(); renderChanBar(); updateComposer(); setTimeout(broadcastStudy, 400);
   if (S.isHost) S.members = membersList(), renderMembers();
 }
 
@@ -2558,17 +3143,21 @@ function teardown(keepOverlay) {
   setTimeout(() => { try { p?.destroy(); } catch {} }, 250);
   Object.assign(S, { isHost: false, joined: false, hostConn: null, conns: new Map(), pending: new Map(), members: [], messages: [], notes: [], deco: structuredClone(DECO0), assets: {}, sharers: [], view: null, sounds: [], folders: [], study: {}, remoteScreens: new Map(), micOn: false, unread: 0, editMode: false, selSticker: null, pointMode: false });
   S.typers.forEach(t => clearTimeout(t.t)); S.typers.clear();
-  vid.srcObject = null; lastBgSrc = null; S.sel.clear(); S.selMode = false; S.noteFilter = 'all'; $('#screenTabs').innerHTML = ''; closePops();
+  vid.srcObject = null; lastBgSrc = null; for (const c of dmConns.values()) { try { c.close(); } catch {} } dmConns.clear(); S.dms.clear(); S.chan = 'all'; S.allUnread = 0; closeSettings(); try { wakeLock?.release(); } catch {} wakeLock = null; S.sel.clear(); S.selMode = false; S.noteFilter = 'all'; $('#screenTabs').innerHTML = ''; closePops();
   $('#app').hidden = true; $('#lobby').hidden = false; document.body.classList.remove('is-host');
   $('#chatBadge').textContent = ''; $('#pendingChip').hidden = true;
   $('#pointBtn').setAttribute('aria-pressed', false); $('#screenBox').classList.remove('pointing'); setEditMode(false);
   if (!keepOverlay) hideOverlay();
   setTimeout(() => { S.leaving = false; }, 300);
 }
-window.addEventListener('beforeunload', () => {
-  if (S.isHost && S.joined) { saveRoom(); for (const r of S.conns.values()) { try { r.conn.send({ t: 'close' }); } catch {} } }
+window.addEventListener('beforeunload', e => {
+  if (S.isHost && S.joined) { saveRoom(); if ([...S.conns.values()].some(r => r.approved)) { e.preventDefault(); e.returnValue = ''; } }
 });
-window.addEventListener('pagehide', () => { if (S.isHost && S.joined) saveRoom(); });
+window.addEventListener('pagehide', e => {
+  if (!(S.isHost && S.joined)) return;
+  saveRoom();
+  if (!e.persisted) for (const r of S.conns.values()) { try { r.conn.send({ t: 'close' }); } catch {} }
+});
 
 renderNotes(); renderDeco(); updateMicBtn(); updateShareBtn(); renderAccount(); loadGis();
 </script>
